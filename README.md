@@ -1,37 +1,17 @@
-# wilt-R-analysis
-
-
 ---
-title: A Comparative Assessment of Machine Learning Classification Methods For The
-  Detection of Wilt Disease in Pine and Oak Trees
-output:
-  html_document:
-    df_print: paged
-  html_notebook: default
-  word_document: default
-  pdf_document: default
+A Comparative Assessment of Machine Learning Classification Methods For The Detection of Wilt Disease in Pine and Oak Trees
 ---
 
-
-by Tem Cavanagh as part of STAT6020 Predictive Analytics (Master of Data Science)
+As part of STAT6020 Predictive Analytics (Master of Data Science)
 
 ***
 
-<center>
+**Abstract:** *This paper examines the classification accuracy of machine learning methods in detecting wilt disease present in Japanese pine and oak trees. A comparative
+assessment of statistical learning methods is conducted on the wilt dataset whereby the classification accuracy of decision trees, random forest ensembles and 
+support vector machines are analysed. Formal quantitative assessment of results are carried out in combination with qualitative assessment through visualisation 
+of results. The resulting findings identified a support vector machine with a radial kernel as the most accurate and specific method for classification.
+It is hoped that the findings of this project demonstrate the applicability of statistical learning techniques as preventative measures against forest degradation.*
 
-**Abstract:** *This paper examines the classification accuracy of machine learning methods in*
-*detecting wilt disease present in Japanese pine and oak trees. A comparative*
-*assessment of statistical learning methods is conducted on the wilt dataset*
-*whereby the classification accuracy of decision trees, random forest ensembles and *
-*support vector machines are analysed. Formal quantitative assessment of results*
-*are carried out in combination with qualitative assessment through visualisation* 
-*of results. The resulting findings identified a support vector machine with a*
-*radial kernel as the most accurate and specific method for classification.* 
-*It is hoped that the findings of this project demonstrate the applicability of* 
-*statistical learning techniques as preventative measures against forest degradation.*
-
-
-</center>
 
 ***
 ### Introduction:
@@ -46,7 +26,7 @@ Johnson et. al. have conducted high resolution satellite image surveys with the
 purpose of identifying diseased pine and oak trees in Japan. The resulting images
 are shown below:
 
-![Figure 1: Diseased classified trees (Source: Johnson)](/Users/temueracavanagh/Documents/Documents/Data Science/STAT6020 - Predictive Analytics/Project/wilt_image.png){width=50%}
+<img width="825" alt="wilt_image" src="https://user-images.githubusercontent.com/50828923/150213161-74ea95d0-6fad-496a-8d9b-f3a94d91119c.png">
 
 The objective of this project is to assess and compare the classification accuracy of 
 statistical learning methods in detecting and classifying diseased trees. The overarching
@@ -96,47 +76,6 @@ as disease free ('n') and 212 are classified as diseased ('w').
 The test dataset consists of 968 observations. 919 of which are classified as disease free ('n') 
 and 49 are classified as diseased ('w').
 
-```{r libraries, include=FALSE}
-library(visNetwork)
-library(sparkline)
-library(rpart)
-library(randomForest)
-library(caret)
-library(e1071)
-library(tidyverse)
-library(tinytex)
-```
-
-
-```{r set-data, include=FALSE}
-setwd("/Users/temueracavanagh/Documents/Documents/Data Science/STAT6020 - Predictive Analytics/Project")
-
-wilt = read.csv("wilt_training.csv", stringsAsFactors = TRUE)
-wilt_test = read.csv("wilt_testing.csv", stringsAsFactors = TRUE)
-
-# Remove row 480 from test 
-wilt_test = wilt_test[-c(480),]
-
-# Merge data sets
-wilt = rbind(wilt, wilt_test)
-
-# Check merged data
-wilt[!complete.cases(wilt),] # No missing values
-dim(wilt) # Check dimensions
-nlevels(wilt$class) # Check class factor levels
-table(wilt$class) # Check classifications
-
-# Split train/test sets
-set.seed(0) # Set seed for reproducibility 
-
-# Select 80% of data as sample from total 'n' rows of the data  
-sample = sample.int(n = nrow(wilt), size = floor(.8*nrow(wilt)), replace = F)
-wilt_train = wilt[sample, ]
-wilt_test = wilt[-sample, ]
-```
-
-
-
 ***
 ### Methods:
 
@@ -156,6 +95,10 @@ class.rp = rpart(class ~ ., data = wilt_train)
 ```{r decision-treevis, echo=FALSE, fig.height = 3, fig.width = 3, fig.align = "center"}
 visTree(class.rp, main = "Wilt Decision Tree",width = "80%",  height = "450px")
 ```
+
+![network](https://user-images.githubusercontent.com/50828923/150213681-b623dc27-10b9-414e-88fe-41da4e06ec8a.png)
+
+
 Figure 2: Wilt decision tree
 
 ```{r tree-train, include=FALSE}
@@ -189,6 +132,10 @@ tree.class.pruned = prune(tree = class.rp, cp = CP) # Prune best tree correspond
 ```{r tree-vis, echo=FALSE}
 visTree(tree.class.pruned, main = "Pruned Decision Tree", width = "80%",  height = "450px")
 ```
+
+![network (1)](https://user-images.githubusercontent.com/50828923/150213783-09039c19-a295-42b4-9c2c-aa28c46d9d1c.png)
+
+
 Figure 3: Pruned decision tree
 
 ```{r prune-train, include=FALSE}
