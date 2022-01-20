@@ -166,11 +166,17 @@ forest.train
 ```{r plot-forest, echo=FALSE}
 plot(forest.train, main = "Random Forest Error Rate")
 ```
+
+<img width="733" alt="Screen Shot 2022-01-21 at 7 04 13 am" src="https://user-images.githubusercontent.com/50828923/150413658-1506edf6-1de8-416e-a963-ca7680efba7e.png">
+
 Figure 4: Random forrest error rate
 
 ```{r, echo=FALSE}
 varImpPlot(forest.train, main = "Importance of Variables in Random Forest")
 ```
+
+<img width="732" alt="Screen Shot 2022-01-21 at 7 04 30 am" src="https://user-images.githubusercontent.com/50828923/150413702-2364465b-3645-4a60-a41f-7c469375e7da.png">
+
 Figure 5: Importance of Variables in Random Forest
 
 ```{r train-forest, include=FALSE}
@@ -203,6 +209,9 @@ svm_class
 plot(svm_class, data = wilt_train, Mean_Green~Mean_Red, 
      slice = list(GLCM_pan=1, Mean_NIR=1, SD_pan=1), xaxs="i")
 ```
+
+<img width="733" alt="Screen Shot 2022-01-21 at 7 04 42 am" src="https://user-images.githubusercontent.com/50828923/150413735-c97b7cd1-bbd0-4eaf-b36d-ece263491ca2.png">
+
 Figure 6: Visualisation of SVM classifier
 
 ```{r svm-train, include=FALSE}
@@ -326,6 +335,9 @@ results_table = cbind(labs, train_accuracy, train_specificity, accuracy, specifi
 ```{r, echo=FALSE}
 results_table
 ```
+
+<img width="922" alt="Screen Shot 2022-01-21 at 7 07 18 am" src="https://user-images.githubusercontent.com/50828923/150414016-48b2c329-61ff-4277-aaf7-6c1ce8997f6c.png">
+
 Table 2: Method results   
 
 From the results obtained through the assessed methods, the radial support
